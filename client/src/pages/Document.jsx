@@ -129,7 +129,7 @@ export default function TextEditor() {
 
           <HistoryDisplay />
         </div>
-        <div className="h-32 rounded-lg bg-gray-200 lg:col-span-2">
+        <div className="h-32 rounded-lg lg:col-span-2">
           <div>
             <div className="container" ref={wrapperRef}></div>
           </div>
