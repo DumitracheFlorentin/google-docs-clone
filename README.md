@@ -1,5 +1,25 @@
 # google-docs-clone
 
+### Frontend setup
+
+- Move to server dir
+
+```
+  cd client
+```
+
+- Install deps
+
+```
+  npm i
+```
+
+- Run frontend
+
+```
+  npm run dev
+```
+
 ### Backend setup
 
 - Move to server dir
