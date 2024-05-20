@@ -55,7 +55,7 @@ function Home() {
 
   return (
     <div className="container mx-auto p-4">
-      {modalVisible && (
+      {!user && modalVisible && (
         <LoginModal
           onLogin={handleLogin}
           onClose={() => setModalVisible(false)}

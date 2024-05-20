@@ -18,7 +18,7 @@ function DocumentsList({ documents, onAddDocument }) {
                 <li key={doc._id}>
                   <Link
                     to={`/documents/${doc._id}`}
-                    className="group block overflow-hidden bg-gray-200 flex justify-center items-center"
+                    className="rounded-xl group block overflow-hidden bg-gray-200 flex justify-center items-center"
                   >
                     <div className="relative py-5">
                       <h3 className="text-md text-gray-700 group-hover:underline group-hover:underline-offset-4">

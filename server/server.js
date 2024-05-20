@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 
 const Document = require('./models/Document')
+const User = require('./models/User')
 
 const documentRoutes = require('./routes/document.route')
 const userRoutes = require('./routes/user.route')
@@ -46,9 +47,35 @@ io.on('connection', (socket) => {
     const document = await findOrCreateDocument(documentId, userId)
     socket.join(documentId)
     socket.emit('load-document', document)
+    socket.emit('load-history', document.history)
 
-    socket.on('send-changes', (delta) => {
+    socket.on('send-changes', async (delta) => {
+      const user = await User.findById(userId)
+
+      if (!user) {
+        console.error('User not found')
+        return
+      }
+
+      const userEmail = user.email
+
       socket.broadcast.to(documentId).emit('receive-changes', delta)
+      const historyEntry = {
+        userEmail,
+        timestamp: new Date(),
+        change: JSON.stringify(delta),
+        action: 'edit',
+      }
+
+      Document.findByIdAndUpdate(
+        documentId,
+        {
+          $push: { history: historyEntry },
+        },
+        { new: true },
+      ).then((updatedDocument) => {
+        io.in(documentId).emit('history-update', historyEntry)
+      })
     })
 
     socket.on('save-document', async (data) => {
@@ -81,6 +108,7 @@ async function findOrCreateDocument(id, userId) {
       data: defaultValue,
       owner: userId,
       participants: [userId],
+      history: [],
     })
   }
 }

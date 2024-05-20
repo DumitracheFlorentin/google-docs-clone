@@ -6,6 +6,14 @@ const documentSchema = new mongoose.Schema({
   data: { type: Object, required: true },
   owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   participants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  history: [
+    {
+      userId: mongoose.Schema.Types.ObjectId,
+      timestamp: Date,
+      change: String,
+      action: String,
+    },
+  ],
 })
 
 const Document = mongoose.model('Document', documentSchema)

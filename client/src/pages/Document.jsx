@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useState } from 'react'
 import Quill from 'quill'
 import 'quill/dist/quill.snow.css'
-import { io } from 'socket.io-client'
-import { useNavigate, useParams } from 'react-router-dom'
+
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useUser } from '../contexts/UserContext'
+import { useSocket } from '../contexts/SocketContext'
 import DocumentTitle from '../components/document-title'
+import HistoryDisplay from '../components/history-display'
 
 const SAVE_INTERVAL_MS = 2000
 const TOOLBAR_OPTIONS = [
@@ -23,7 +25,7 @@ export default function TextEditor() {
   const navigate = useNavigate()
   const { id: documentId } = useParams()
   const { user } = useUser()
-  const [socket, setSocket] = useState()
+  const socket = useSocket()
   const [quill, setQuill] = useState()
   const [title, setTitle] = useState()
 
@@ -34,15 +36,6 @@ export default function TextEditor() {
       navigate(`/?${queryParams.toString()}`, { replace: true })
     }
   }, [user, navigate, documentId])
-
-  useEffect(() => {
-    const s = io('http://localhost:3001')
-    setSocket(s)
-
-    return () => {
-      s.disconnect()
-    }
-  }, [])
 
   useEffect(() => {
     if (socket == null || quill == null || !user) return
@@ -116,9 +109,28 @@ export default function TextEditor() {
   }
 
   return (
-    <>
-      <DocumentTitle initialTitle={title} onTitleChange={handleTitleChange} />
-      <div className="container" ref={wrapperRef}></div>
-    </>
+    <div className="container mx-auto">
+      <div className="mt-5 mb-10 flex items-center justify-between">
+        <Link to="/">
+          <button className="bg-blue-500 text-white px-5 py-2.5 rounded-xl">
+            Home
+          </button>
+        </Link>
+
+        <DocumentTitle initialTitle={title} onTitleChange={handleTitleChange} />
+      </div>
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
+        <div className="h-32 rounded-lg bg-gray-200">
+          <h3 className="p-3 text-xl mb-2">History</h3>
+
+          <HistoryDisplay />
+        </div>
+        <div className="h-32 rounded-lg bg-gray-200 lg:col-span-2">
+          <div>
+            <div className="container" ref={wrapperRef}></div>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
