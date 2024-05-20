@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import axios from 'axios'
 
 function LoginModal({ onLogin, onClose }) {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const [isLogin, setIsLogin] = useState(true)
+  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState('')
 
   const handleSubmit = async () => {
     if (!email || !password) {

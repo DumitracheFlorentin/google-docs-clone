@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { v4 as uuidv4 } from 'uuid'
 import axios from 'axios'
 
-import { useNavigate, useLocation } from 'react-router-dom'
-import { v4 as uuidv4 } from 'uuid'
-
-import LoginModal from '../components/login'
-import DocumentsList from '../components/documents-list'
-
 import { useUser } from '../contexts/UserContext'
+
+import DocumentsList from '../components/documents-list'
+import LoginModal from '../components/login'
 
 function Home() {
   const navigate = useNavigate()

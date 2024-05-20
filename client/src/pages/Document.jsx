@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useState } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+
 import Quill from 'quill'
 import 'quill/dist/quill.snow.css'
 
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import { useUser } from '../contexts/UserContext'
 import { useSocket } from '../contexts/SocketContext'
-import DocumentTitle from '../components/document-title'
+import { useUser } from '../contexts/UserContext'
+
 import HistoryDisplay from '../components/history-display'
+import DocumentTitle from '../components/document-title'
 
 const SAVE_INTERVAL_MS = 2000
 const TOOLBAR_OPTIONS = [
@@ -22,10 +24,12 @@ const TOOLBAR_OPTIONS = [
 ]
 
 export default function TextEditor() {
-  const navigate = useNavigate()
   const { id: documentId } = useParams()
+  const navigate = useNavigate()
+
   const { user } = useUser()
   const socket = useSocket()
+
   const [quill, setQuill] = useState()
   const [title, setTitle] = useState()
 
