@@ -1,6 +1,25 @@
 import { Link } from 'react-router-dom'
 
 function DocumentsList({ documents, onAddDocument }) {
+  function formatDate(dateString) {
+    const date = new Date(dateString)
+
+    const year = date.getUTCFullYear()
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0')
+    const day = String(date.getUTCDate()).padStart(2, '0')
+
+    let hour = date.getUTCHours()
+    const ampm = hour >= 12 ? 'PM' : 'AM'
+    hour = hour % 12
+    hour = hour ? hour : 12
+    const formattedHour = String(hour).padStart(2, '0')
+
+    const minute = String(date.getUTCMinutes()).padStart(2, '0')
+    const seconds = String(date.getUTCSeconds()).padStart(2, '0')
+
+    return `${year}/${month}/${day} ${formattedHour}:${minute}:${seconds} ${ampm}`
+  }
+
   return (
     <div>
       <section>
@@ -20,9 +39,16 @@ function DocumentsList({ documents, onAddDocument }) {
                     className="rounded-xl group block overflow-hidden bg-gray-200 flex justify-center items-center"
                   >
                     <div className="relative py-5">
-                      <h3 className="text-md text-gray-700 group-hover:underline group-hover:underline-offset-4">
+                      <h3 className="text-md text-center text-gray-700 group-hover:underline group-hover:underline-offset-4">
                         {doc.title || 'Undefined title'}
                       </h3>
+
+                      <h5 className="mt-3 text-sm text-center text-gray-400 group-hover:underline group-hover:underline-offset-4">
+                        Last Update:
+                      </h5>
+                      <p className="mt-1 text-sm text-center text-gray-400 group-hover:underline group-hover:underline-offset-4">
+                        {formatDate(doc.updated_at)}
+                      </p>
                     </div>
                   </Link>
                 </li>
