@@ -1,14 +1,12 @@
-import { useEffect, useState } from 'react'
+// HistoryDisplay.jsx
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-
 import { useSocket } from '../contexts/SocketContext'
 
 const HistoryDisplay = () => {
   const { id: documentId } = useParams()
-
-  const socket = useSocket()
-
   const [history, setHistory] = useState([])
+  const socket = useSocket()
 
   useEffect(() => {
     if (!socket) return
@@ -16,11 +14,11 @@ const HistoryDisplay = () => {
     socket.emit('subscribe-history', documentId)
 
     socket.on('load-history', (loadedHistory) => {
-      setHistory(loadedHistory.reverse())
+      setHistory(loadedHistory.reverse()) // Reverse the loaded history once
     })
 
     socket.on('history-update', (newEntry) => {
-      setHistory((prevHistory) => [newEntry, ...prevHistory])
+      setHistory((prevHistory) => [newEntry, ...prevHistory]) // Add new entries to the top
     })
 
     return () => {

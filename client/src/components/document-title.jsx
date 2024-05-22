@@ -1,7 +1,11 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 
 const DocumentTitle = ({ initialTitle, onTitleChange }) => {
   const [title, setTitle] = useState(initialTitle)
+
+  useEffect(() => {
+    setTitle(initialTitle)
+  }, [initialTitle])
 
   const handleChange = (event) => {
     setTitle(event.target.value)
@@ -9,10 +13,6 @@ const DocumentTitle = ({ initialTitle, onTitleChange }) => {
       onTitleChange(event.target.value)
     }
   }
-
-  useEffect(() => {
-    setTitle(initialTitle)
-  }, [initialTitle])
 
   return (
     <input
