@@ -66,10 +66,10 @@ After setting up the frontend, move on to configuring the backend:
 3. **Create an Environment File:**
 - Create a .env file in the root of the server directory and provide the necessary environment variables:
    ```bash
-   PORT=3001
+   PORT=3000
    MONGO_URI=your_mongodb_uri
-   CORS_ORIGIN=http://localhost:3000
-   SOCKET_PORT=3002
+   CORS_ORIGIN=http://localhost:5173
+   SOCKET_PORT=3001
    ```
 
 4. **Start the Backend Server:**
