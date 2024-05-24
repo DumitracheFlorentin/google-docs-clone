@@ -9,7 +9,7 @@ export const SocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null)
 
   useEffect(() => {
-    const newSocket = io('http://localhost:3001')
+    const newSocket = io('https://google-docs-clone-m3h0.onrender.com')
     setSocket(newSocket)
 
     return () => newSocket.disconnect()

@@ -15,13 +15,16 @@ function LoginModal({ onLogin, onClose }) {
     try {
       let response
       if (isLogin) {
-        response = await axios.post('http://localhost:3000/api/users/login', {
-          email,
-          password,
-        })
+        response = await axios.post(
+          'https://google-docs-clone-m3h0.onrender.com//api/users/login',
+          {
+            email,
+            password,
+          },
+        )
       } else {
         response = await axios.post(
-          'http://localhost:3000/api/users/register',
+          'https://google-docs-clone-m3h0.onrender.com//api/users/register',
           { email, password },
         )
       }

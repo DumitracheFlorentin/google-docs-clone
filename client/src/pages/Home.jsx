@@ -34,7 +34,7 @@ function Home() {
   const fetchDocuments = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/documents/${user.id}`,
+        `https://google-docs-clone-m3h0.onrender.com//api/documents/${user.id}`,
       )
       setDocuments(response.data)
     } catch (error) {
