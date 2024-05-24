@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
+const path = require('node:path')
 
 const Document = require('./models/Document')
 const User = require('./models/User')
@@ -28,6 +29,21 @@ app.use(
 app.use(express.json())
 app.use('/api/users', userRoutes)
 app.use('/api/documents', documentRoutes)
+
+// deployment
+const __dirname1 = path.resolve()
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname1, '/client/dist')))
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname1, 'client', 'dist', 'index.html'))
+  })
+} else {
+  app.get('/', (req, res) => {
+    res.send('API is running successfully!')
+  })
+}
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
