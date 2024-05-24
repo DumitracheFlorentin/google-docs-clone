@@ -16,7 +16,7 @@ function LoginModal({ onLogin, onClose }) {
       let response
       if (isLogin) {
         response = await axios.post(
-          'https://google-docs-clone-m3h0.onrender.com//api/users/login',
+          'https://google-docs-clone-m3h0.onrender.com/api/users/login',
           {
             email,
             password,
@@ -24,7 +24,7 @@ function LoginModal({ onLogin, onClose }) {
         )
       } else {
         response = await axios.post(
-          'https://google-docs-clone-m3h0.onrender.com//api/users/register',
+          'https://google-docs-clone-m3h0.onrender.com/api/users/register',
           { email, password },
         )
       }
