@@ -45,11 +45,11 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
 
-const io = require('socket.io')(process.env.SOCKET_PORT, {
+const io = require('socket.io')(server, {
   cors: {
     origin: process.env.CORS_ORIGIN,
     methods: ['GET', 'POST'],
